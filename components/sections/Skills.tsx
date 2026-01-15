@@ -6,37 +6,7 @@ import LogoLoop from '../ui/LogoLoop';
 import { getSkills, getSectionTitles } from '../../lib/sanity';
 import { SkillCategory as SanitySkillCategory, SectionTitles } from '../../types/sanity';
 
-// Fallback data moved outside component to be stable
-const fallbackSkills: SanitySkillCategory[] = [
-  {
-    _id: '1',
-    _type: 'skillCategory',
-    title: "Languages",
-    skills: ["Python", "Java", "JavaScript", "TypeScript", "LaTeX", "C++"],
-    order: 1
-  },
-  {
-    _id: '2',
-    _type: 'skillCategory',
-    title: "AI & ML Frameworks",
-    skills: ["TensorFlow", "Keras", "scikit-learn", "Pandas", "NumPy", "XGBoost"],
-    order: 2
-  },
-  {
-    _id: '3',
-    _type: 'skillCategory',
-    title: "Web Technologies",
-    skills: ["React", "Tailwind CSS", "Node.js", "Firebase", "REST APIs"],
-    order: 3
-  },
-  {
-    _id: '4',
-    _type: 'skillCategory',
-    title: "Tools & Platforms",
-    skills: ["Git", "Docker", "Google Colab", "n8n", "Discord API", "VS Code"],
-    order: 4
-  }
-];
+
 
 // Helper to get icon for skill using Devicon CDN
 const getSkillIcon = (skillName: string) => {
@@ -150,7 +120,7 @@ const Skills: React.FC = () => {
     fetchData();
   }, []);
 
-  const displaySkills = useMemo(() => skillData.length > 0 ? skillData : fallbackSkills, [skillData]);
+  const displaySkills = useMemo(() => skillData || [], [skillData]);
 
   const allSkills = useMemo(() => {
     if (displaySkills.length === 0) return [];

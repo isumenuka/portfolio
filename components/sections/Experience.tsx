@@ -29,102 +29,12 @@ const Experience: React.FC = () => {
         fetchData();
     }, []);
 
-    // Fallback data if Sanity is empty
-    const fallbackExperiences: ExperienceType[] = [
-        {
-            _id: '1',
-            _type: 'experience',
-            title: 'Graphic Designer',
-            company: 'Teminas',
-            type: 'Full-time',
-            period: 'Jul 2023 - Mar 2025 · 1 yr 9 mos',
-            location: 'Sri Lanka · Hybrid',
-            description: 'We will guide you to good things.',
-            skills: ['Artworking', 'Computer Graphics Design', 'Online Graphics', 'Graphic Design Software', 'Adobe Premiere Pro', 'Image Design', 'Adobe Photoshop', 'Video Editing', 'Graphic Design', 'Logo Design', 'Adobe Illustrator'],
-            link: {
-                text: 'Home | Teminas',
-                url: '#'
-            },
-            order: 1
-        },
-        {
-            _id: '2',
-            _type: 'experience',
-            title: 'Stock Photographer',
-            company: 'Wirestock',
-            type: 'Part-time',
-            period: 'Jul 2023 - Mar 2025 · 1 yr 9 mos',
-            location: 'United States · Remote',
-            description: `Traversing the vast expanse of the digital canvas, I passionately dive into the intricate world of algorithms, one line at a time. My heart beats with the rhythm of an AI artist, weaving the magic of art through the tapestry of code.`,
-            skills: ['Stock Photography'],
-            link: {
-                text: 'isuma Portfolio on Wirestock',
-                url: '#'
-            },
-            order: 2
-        },
-        {
-            _id: '3',
-            _type: 'experience',
-            title: 'Founder',
-            company: 'ezsumm',
-            type: 'Self-employed',
-            period: 'Oct 2024 - Present · 1 yr 4 mos',
-            location: 'Sri Lanka · Remote',
-            description: "Let's Dream Out Of The Box",
-            skills: ['Editing', 'Graphic Design', 'Logo Design'],
-            link: {
-                text: 'isum.online',
-                url: '#'
-            },
-            order: 3
-        }
-    ];
 
-    const fallbackEducation: EducationType[] = [
-        {
-            _id: '1',
-            _type: 'education',
-            institution: 'Robert Gordon University',
-            degree: 'BSc (Hons), Artificial Intelligence And Data Science',
-            period: 'Jan 2025 - Jan 2029',
-            link: {
-                text: 'Informatics Institute of Technology | IIT Campus',
-                url: '#'
-            },
-            order: 1
-        },
-        {
-            _id: '2',
-            _type: 'education',
-            institution: 'Ananda College',
-            degree: 'Grade: 12 to 13',
-            period: 'Jan 2022',
-            skills: ['Team Leadership', 'Teamwork'],
-            link: {
-                text: 'Ananada College - Colombo',
-                url: '#'
-            },
-            order: 2
-        },
-        {
-            _id: '3',
-            _type: 'education',
-            institution: 'Central College Piliyandala',
-            degree: 'General Studies',
-            period: 'Jan 2015 - Dec 2021',
-            grade: 'Grade: 6 to 11',
-            skills: ['Swimming', 'Art', 'Team Leadership', 'Sports', 'Teamwork'],
-            link: {
-                text: 'Central College Piliyandala',
-                url: '#'
-            },
-            order: 3
-        }
-    ];
 
-    const displayExperiences = experiences.length > 0 ? experiences : fallbackExperiences;
-    const displayEducation = education.length > 0 ? education : fallbackEducation;
+
+
+    const displayExperiences = experiences || [];
+    const displayEducation = education || [];
 
     return (
         <section id="experience" className="min-h-screen py-24 px-4 sm:px-6 relative overflow-hidden">

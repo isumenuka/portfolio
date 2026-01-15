@@ -5,44 +5,6 @@ import { getProjects, getSectionTitles } from '../../lib/sanity';
 import { Project as SanityProject, SectionTitles } from '../../types/sanity';
 import { ParticleCard, GlobalSpotlight } from '../ui/MagicBento';
 
-// Fallback data in case no Sanity content yet
-const fallbackProjects = [
-  {
-    _id: '1',
-    title: "Food Preservation ML",
-    description: "Machine Learning model designed to predict food spoilage rates and optimize storage conditions using sensor data analysis.",
-    tags: ["Python", "scikit-learn", "Pandas", "IoT"],
-    link: "https://github.com/isumenuka",
-  },
-  {
-    _id: '2',
-    title: "Traditional Masks Detection",
-    description: "Deep Learning computer vision project capable of identifying and classifying traditional Sri Lankan masks from images.",
-    tags: ["TensorFlow", "Keras", "Deep Learning", "OpenCV"],
-    link: "https://github.com/isumenuka",
-  },
-  {
-    _id: '3',
-    title: "TeamMate App",
-    description: "A collaborative platform for developers to find teammates for hackathons and side projects based on skill compatibility.",
-    tags: ["React", "Node.js", "Firebase", "Tailwind"],
-    link: "https://github.com/isumenuka",
-  },
-  {
-    _id: '4',
-    title: "Suno.AI Music Generator",
-    description: "Experimental project leveraging Suno.AI to generate algorithmic music compositions based on mood prompts.",
-    tags: ["AI Audio", "Suno", "Python", "API Integration"],
-    link: "https://www.linkedin.com/in/ezsumm/",
-  },
-  {
-    _id: '5',
-    title: "Kaggle Competitions",
-    description: "Various data science notebooks and solutions provided for competitive programming challenges on Kaggle.",
-    tags: ["Data Analysis", "Jupyter", "XGBoost", "Matplotlib"],
-    link: "https://www.kaggle.com/",
-  }
-];
 
 const Projects: React.FC = () => {
   const [projects, setProjects] = useState<SanityProject[]>([]);
@@ -57,11 +19,11 @@ const Projects: React.FC = () => {
           getProjects(),
           getSectionTitles()
         ]);
-        setProjects(projectsData && projectsData.length > 0 ? projectsData : fallbackProjects);
+        setProjects(projectsData || []);
         setSectionTitles(titlesData);
       } catch (error) {
         console.error('Error fetching projects:', error);
-        setProjects(fallbackProjects);
+        setProjects([]);
       } finally {
         setLoading(false);
       }

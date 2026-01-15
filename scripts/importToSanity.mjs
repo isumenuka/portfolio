@@ -1,0 +1,109 @@
+// Auto-import script for Sanity using sanity-cli
+// This will import all your hardcoded data into Sanity
+
+import { createClient } from '@sanity/client';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Configure Sanity client - you MUST add your token
+const client = createClient({
+    projectId: 'zgo49znz',
+    dataset: 'production',
+    apiVersion: '2024-01-01',
+    useCdn: false,
+    token: process.env.SANITY_WRITE_TOKEN || '', // Get from https://www.sanity.io/manage
+});
+
+async function importData() {
+    console.log('🚀 Starting Sanity Data Import...\n');
+
+    // Read the seed data
+    const seedDataPath = path.join(__dirname, '..', 'sanity', 'migrations', 'seedData.json');
+    const seedData = JSON.parse(fs.readFileSync(seedDataPath, 'utf8'));
+
+    let successCount = 0;
+    let errorCount = 0;
+
+    // Import Projects
+    console.log('📦 Importing Projects...');
+    for (const project of seedData.projects) {
+        try {
+            await client.create(project);
+            console.log(`  ✅ ${project.title}`);
+            successCount++;
+        } catch (error) {
+            console.error(`  ❌ ${project.title}: ${error.message}`);
+            errorCount++;
+        }
+    }
+
+    // Import Experiences
+    console.log('\n💼 Importing Experiences...');
+    for (const exp of seedData.experiences) {
+        try {
+            await client.create(exp);
+            console.log(`  ✅ ${exp.title} at ${exp.company}`);
+            successCount++;
+        } catch (error) {
+            console.error(`  ❌ ${exp.title}: ${error.message}`);
+            errorCount++;
+        }
+    }
+
+    // Import Education
+    console.log('\n🎓 Importing Education...');
+    for (const edu of seedData.education) {
+        try {
+            await client.create(edu);
+            console.log(`  ✅ ${edu.institution}`);
+            successCount++;
+        } catch (error) {
+            console.error(`  ❌ ${edu.institution}: ${error.message}`);
+            errorCount++;
+        }
+    }
+
+    // Import Skill Categories
+    console.log('\n💻 Importing Skill Categories...');
+    for (const skill of seedData.skillCategories) {
+        try {
+            await client.create(skill);
+            console.log(`  ✅ ${skill.title}`);
+            successCount++;
+        } catch (error) {
+            console.error(`  ❌ ${skill.title}: ${error.message}`);
+            errorCount++;
+        }
+    }
+
+    // Summary
+    console.log('\n' + '='.repeat(50));
+    console.log(`✅ Successfully imported: ${successCount} items`);
+    console.log(`❌ Errors: ${errorCount} items`);
+    console.log('='.repeat(50));
+    console.log('\n🎉 Import Complete!');
+    console.log('👉 Now open Sanity Studio to edit your content');
+    console.log('   Run: npm run sanity');
+}
+
+// Check for token
+if (!process.env.SANITY_WRITE_TOKEN) {
+    console.error('❌ ERROR: SANITY_WRITE_TOKEN environment variable not set!');
+    console.log('\n📝 To get your token:');
+    console.log('   1. Go to https://www.sanity.io/manage');
+    console.log('   2. Select your project');
+    console.log('   3. Go to API → Tokens');
+    console.log('   4. Create token with "Editor" permissions');
+    console.log('   5. Run: $env:SANITY_WRITE_TOKEN = "your-token-here"');
+    console.log('   6. Then run this script again\n');
+    process.exit(1);
+}
+
+importData().catch(error => {
+    console.error('💥 Fatal error:', error);
+    process.exit(1);
+});
