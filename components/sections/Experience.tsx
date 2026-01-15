@@ -2,22 +2,25 @@ import React, { useEffect, useState } from 'react';
 import TargetCursor from '../ui/TargetCursor';
 import SpotlightCard from '../ui/SpotlightCard';
 import { FaBriefcase, FaGraduationCap, FaBuilding, FaSchool } from 'react-icons/fa';
-import { getExperience, getEducation, urlFor } from '../../lib/sanity';
-import { Experience as ExperienceType, Education as EducationType } from '../../types/sanity';
+import { getExperience, getEducation, urlFor, getSectionTitles } from '../../lib/sanity';
+import { Experience as ExperienceType, Education as EducationType, SectionTitles } from '../../types/sanity';
 
 const Experience: React.FC = () => {
     const [experiences, setExperiences] = useState<ExperienceType[]>([]);
     const [education, setEducation] = useState<EducationType[]>([]);
+    const [sectionTitles, setSectionTitles] = useState<SectionTitles | null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [expData, eduData] = await Promise.all([
+                const [expData, eduData, titlesData] = await Promise.all([
                     getExperience(),
-                    getEducation()
+                    getEducation(),
+                    getSectionTitles()
                 ]);
                 setExperiences(expData);
                 setEducation(eduData);
+                setSectionTitles(titlesData);
             } catch (error) {
                 console.error('Error fetching experience/education:', error);
             }
@@ -133,10 +136,10 @@ const Experience: React.FC = () => {
                 {/* Section Header */}
                 <div className="mb-20 text-center relative">
                     <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent inline-block">
-                        Experience & Education
+                        {sectionTitles?.experienceTitle || 'Experience'} & {sectionTitles?.educationTitle || 'Education'}
                     </h2>
                     <p className="text-gray-400 mt-4 text-lg max-w-2xl mx-auto">
-                        My professional journey and academic path, marked by continuous learning and building.
+                        {sectionTitles?.experienceSubtitle || 'My professional journey and academic path, marked by continuous learning and building.'}
                     </p>
                 </div>
 
@@ -150,7 +153,7 @@ const Experience: React.FC = () => {
                             <div className="p-3 bg-cyan-500/10 rounded-xl border border-cyan-500/20">
                                 <FaBriefcase className="text-cyan-400 text-xl" />
                             </div>
-                            <h3 className="text-3xl font-bold text-white">Work Experience</h3>
+                            <h3 className="text-3xl font-bold text-white">{sectionTitles?.experienceTitle || 'Work Experience'}</h3>
                         </div>
 
                         <div className="space-y-12 relative border-l-2 border-cyan-500/20 lg:border-none pl-8 lg:pl-0">
@@ -220,7 +223,7 @@ const Experience: React.FC = () => {
                             <div className="p-3 bg-purple-500/10 rounded-xl border border-purple-500/20">
                                 <FaGraduationCap className="text-purple-400 text-xl" />
                             </div>
-                            <h3 className="text-3xl font-bold text-white">Education</h3>
+                            <h3 className="text-3xl font-bold text-white">{sectionTitles?.educationTitle || 'Education'}</h3>
                         </div>
 
                         <div className="space-y-12 relative border-l-2 border-purple-500/20 lg:border-none pl-8 lg:pl-0">

@@ -54,3 +54,8 @@ export async function getContact() {
 export async function getCreativeUniverses() {
     return await client.fetch('*[_type == "creativeUniverses"][0]')
 }
+
+export async function getSectionTitles() {
+    return await client.fetch('*[_type == "sectionTitles"][0]')
+}
+

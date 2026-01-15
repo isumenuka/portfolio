@@ -84,3 +84,16 @@ export interface Contact {
     linkedin?: string;
     twitter?: string;
 }
+
+export interface SectionTitles {
+    _id: string;
+    projectsTitle?: string;
+    projectsSubtitle?: string;
+    experienceTitle?: string;
+    experienceSubtitle?: string;
+    educationTitle?: string;
+    educationSubtitle?: string;
+    skillsTitle?: string;
+    skillsSubtitle?: string;
+}
+
