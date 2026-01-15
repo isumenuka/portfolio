@@ -14,6 +14,7 @@ export interface GooeyNavProps {
   timeVariance?: number;
   colors?: number[];
   initialActiveIndex?: number;
+  onItemClick?: (item: GooeyNavItem, index: number) => void;
 }
 
 const GooeyNav: React.FC<GooeyNavProps> = ({
@@ -24,13 +25,18 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
   particleR = 100,
   timeVariance = 300,
   colors = [1, 2, 3, 1, 2, 3, 1, 4],
-  initialActiveIndex = 0
+  initialActiveIndex = 0,
+  onItemClick
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const navRef = useRef<HTMLUListElement>(null);
   const filterRef = useRef<HTMLSpanElement>(null);
   const textRef = useRef<HTMLSpanElement>(null);
   const [activeIndex, setActiveIndex] = useState<number>(initialActiveIndex);
+
+  useEffect(() => {
+    setActiveIndex(initialActiveIndex);
+  }, [initialActiveIndex]);
 
   const noise = (n = 1) => n / 2 - Math.random() * n;
   const getXY = (distance: number, pointIndex: number, totalPoints: number): [number, number] => {
@@ -99,6 +105,12 @@ const GooeyNav: React.FC<GooeyNavProps> = ({
   };
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, index: number) => {
     const liEl = e.currentTarget;
+
+    // Call external handler if provided
+    if (onItemClick) {
+      onItemClick(items[index], index);
+    }
+
     if (activeIndex === index) return;
     setActiveIndex(index);
     updateEffectPosition(liEl);

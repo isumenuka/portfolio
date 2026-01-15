@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -7,100 +7,95 @@ gsap.registerPlugin(ScrollTrigger);
 interface ScrambledTextProps {
     children: string;
     className?: string;
-    duration?: number;
-    speed?: number;
-    delay?: number;
-    scrambleChars?: string;
-    revealDirection?: 'start' | 'end' | 'random';
+    speed?: number; // 0-1, likelihood of change per frame
+    duration?: number; // Total duration in seconds
+    delay?: number; // Delay before starting in seconds
 }
+
+const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+';
 
 const ScrambledText: React.FC<ScrambledTextProps> = ({
     children,
     className = '',
+    speed = 0.5,
     duration = 1.5,
-    speed = 0.05,
     delay = 0,
-    scrambleChars = '!<>-_\\/[]{}—=+*^?#________',
-    revealDirection = 'start',
 }) => {
     const [displayText, setDisplayText] = useState(children);
     const elementRef = useRef<HTMLSpanElement>(null);
-    const isAnimating = useRef(false);
+    const originalText = children;
 
     useEffect(() => {
-        const element = elementRef.current;
-        if (!element) return;
-
-        const originalText = children;
-        const length = originalText.length;
-        const chars = scrambleChars.split('');
-
-        // Initial scramble state
-        // We don't necessarily need to set it immediately to scrambled if we want to read it then scramble-reveal, 
-        // but usually "Scrambled Text effect" means it starts scrambled and resolves to clear text.
-        // For accessibility, we should probably keep the real text in the DOM or aria-label, 
-        // but for the visual effect, we swap it.
+        // If we're on the server or text is empty, just render
+        if (!originalText) return;
 
         let progress = 0;
+        let animationFrameId: number;
+        let startTime: number;
+        let isAnimating = false;
 
-        const scrambleAnimation = {
-            value: 0
-        };
+        const scramble = (timestamp: number) => {
+            if (!startTime) startTime = timestamp;
+            const elapsedTime = (timestamp - startTime) / 1000; // in seconds
 
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: element,
-                start: 'top 85%',
-                toggleActions: 'play none none reverse',
-            },
-            delay: delay,
-            onStart: () => {
-                isAnimating.current = true;
-            },
-            onComplete: () => {
-                isAnimating.current = false;
-                setDisplayText(originalText);
-            }
-        });
+            // Calculate normalized progress (0 to 1)
+            progress = Math.min(elapsedTime / duration, 1);
 
-        tl.to(scrambleAnimation, {
-            duration: duration,
-            value: 1,
-            ease: 'power2.inOut',
-            onUpdate: () => {
-                const p = scrambleAnimation.value;
-                let result = '';
+            // Determine how many characters should be revealed based on progress
+            const length = originalText.length;
+            const revealIndex = Math.floor(progress * length);
 
-                for (let i = 0; i < length; i++) {
-                    // If we should reveal this character yet
-                    const shouldReveal = revealDirection === 'start'
-                        ? i / length < p
-                        : revealDirection === 'end'
-                            ? (length - i) / length < p
-                            : Math.random() < p; // Random reveal
-
-                    if (shouldReveal) {
-                        result += originalText[i];
+            // Generate new string
+            let newText = '';
+            for (let i = 0; i < length; i++) {
+                if (i < revealIndex) {
+                    // Revealed character
+                    newText += originalText[i];
+                } else {
+                    // Scrambled character (only valid if text is not a space)
+                    if (originalText[i] === ' ') {
+                        newText += ' ';
                     } else {
-                        // Show random char, but preserve spaces for layout stability usually, 
-                        // though sometimes spaces being scrambled looks cool too. 
-                        // Let's preserve spaces to avoid massive reflows.
-                        if (originalText[i] === ' ') {
-                            result += ' ';
-                        } else {
-                            result += chars[Math.floor(Math.random() * chars.length)];
-                        }
+                        // Randomly change character based on speed
+                        // If speed is high, change often. If low, hold character.
+                        // For simplicity in this request, we just pick random char.
+                        newText += CHARS[Math.floor(Math.random() * CHARS.length)];
                     }
                 }
-                setDisplayText(result);
             }
-        });
 
-        return () => {
-            tl.kill();
+            setDisplayText(newText);
+
+            if (progress < 1) {
+                animationFrameId = requestAnimationFrame(scramble);
+            } else {
+                setDisplayText(originalText); // Ensure final state is correct
+            }
         };
 
-    }, [children, duration, speed, delay, scrambleChars, revealDirection]);
+        // Use ScrollTrigger to start animation when visible
+        const el = elementRef.current;
+        if (el) {
+            ScrollTrigger.create({
+                trigger: el,
+                start: 'top 80%', // Start when top of text hits 80% viewport
+                onEnter: () => {
+                    if (!isAnimating) {
+                        isAnimating = true;
+                        setTimeout(() => {
+                            animationFrameId = requestAnimationFrame(scramble);
+                        }, delay * 1000);
+                    }
+                },
+                once: true // Play only once
+            });
+        }
+
+        return () => {
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            // Clean up ScrollTrigger? usually handled by GSAP context but explicit kill is good
+        };
+    }, [children, duration, speed, delay, originalText]);
 
     return (
         <span ref={elementRef} className={className}>

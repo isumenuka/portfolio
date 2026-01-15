@@ -1,26 +1,21 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { Reveal, GradientText, LetterFadeIn } from '../ui/TextAnimations';
-import { getProjects, getSectionTitles } from '../../lib/sanity';
-import { Project as SanityProject, SectionTitles } from '../../types/sanity';
+import { getProjects } from '../../lib/sanity';
+import { Project as SanityProject } from '../../types/sanity';
 import { ParticleCard, GlobalSpotlight } from '../ui/MagicBento';
 
 
 const Projects: React.FC = () => {
   const [projects, setProjects] = useState<SanityProject[]>([]);
   const [loading, setLoading] = useState(true);
-  const [sectionTitles, setSectionTitles] = useState<SectionTitles | null>(null);
   const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [projectsData, titlesData] = await Promise.all([
-          getProjects(),
-          getSectionTitles()
-        ]);
+        const projectsData = await getProjects();
         setProjects(projectsData || []);
-        setSectionTitles(titlesData);
       } catch (error) {
         console.error('Error fetching projects:', error);
         setProjects([]);
@@ -74,10 +69,10 @@ const Projects: React.FC = () => {
         <Reveal>
           <div className="mb-10 md:mb-12 lg:mb-16">
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4">
-              Featured <GradientText>{sectionTitles?.projectsTitle || 'Projects'}</GradientText>
+              Featured <GradientText>Projects</GradientText>
             </h2>
             <div className="text-gray-400 text-base md:text-lg max-w-2xl">
-              <LetterFadeIn text={sectionTitles?.projectsSubtitle || "A selection of my work in AI, Machine Learning, and Web Development."} />
+              <LetterFadeIn text="A selection of my work in AI, Machine Learning, and Web Development." />
             </div>
           </div>
         </Reveal>

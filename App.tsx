@@ -1,12 +1,9 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
+import { Analytics } from '@vercel/analytics/react';
 import SilkBackground from './components/ui/SilkBackground';
-import Shuffle from './components/ui/Shuffle';
-import ScrollVelocity from './components/ui/ScrollVelocity';
-import ScrollReveal from './components/ui/ScrollReveal';
 import TrueFocus from './components/ui/TrueFocus';
 import ShinyText from './components/ui/ShinyText';
-import MagicBento from './components/ui/MagicBento';
 import Navbar from './components/layout/Navbar';
 import Hero from './components/sections/Hero';
 import About from './components/sections/About';
@@ -21,19 +18,17 @@ import Preloader from './components/ui/Preloader';
 const App: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(true);
 
-  React.useEffect(() => {
-    // Simulate loading time
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 2500);
-
-    return () => clearTimeout(timer);
-  }, []);
+  const handleLoadComplete = () => {
+    setIsLoading(false);
+  };
 
   return (
     <>
+      {/* Custom Cursor - Always active */}
+      {!isLoading && <TargetCursor hideDefaultCursor={true} />}
+
       <AnimatePresence mode='wait'>
-        {isLoading && <Preloader />}
+        {isLoading && <Preloader onLoadComplete={handleLoadComplete} />}
       </AnimatePresence>
 
       <div className={`transition-opacity duration-1000 ${isLoading ? 'opacity-0 h-0 overflow-hidden' : 'opacity-100'}`}>
@@ -67,14 +62,6 @@ const App: React.FC = () => {
             {/* Creative Universes (Pixel Transition) */}
             <CreativeUniverses />
 
-            {/* ScrollVelocity - Transition to Skills */}
-            <div className="py-4 md:py-6">
-              <ScrollVelocity
-                texts={['💻 CODE', '🎨 DESIGN', '⚡ INNOVATE']}
-                velocity={150}
-                className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500"
-              />
-            </div>
 
             {/* Skills Section */}
             <Skills />
@@ -105,6 +92,9 @@ const App: React.FC = () => {
           </div>
         </main>
       </div>
+
+      {/* Vercel Analytics */}
+      <Analytics />
     </>
   );
 };

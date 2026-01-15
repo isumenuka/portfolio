@@ -3,8 +3,8 @@ import { Reveal } from '../ui/TextAnimations';
 import PixelCard from '../ui/PixelCard';
 import TextCursor from '../ui/TextCursor';
 import LogoLoop from '../ui/LogoLoop';
-import { getSkills, getSectionTitles } from '../../lib/sanity';
-import { SkillCategory as SanitySkillCategory, SectionTitles } from '../../types/sanity';
+import { getSkills } from '../../lib/sanity';
+import { SkillCategory as SanitySkillCategory } from '../../types/sanity';
 
 
 
@@ -101,17 +101,12 @@ const getSkillIcon = (skillName: string) => {
 
 const Skills: React.FC = () => {
   const [skillData, setSkillData] = useState<SanitySkillCategory[]>([]);
-  const [sectionTitles, setSectionTitles] = useState<SectionTitles | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [skillsData, titlesData] = await Promise.all([
-          getSkills(),
-          getSectionTitles()
-        ]);
+        const skillsData = await getSkills();
         setSkillData(skillsData);
-        setSectionTitles(titlesData);
       } catch (error) {
         console.error('Error fetching skills:', error);
       }
@@ -175,7 +170,7 @@ const Skills: React.FC = () => {
       <div className="max-w-6xl mx-auto relative z-10">
         <Reveal>
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 md:mb-12 text-center bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">
-            {sectionTitles?.skillsTitle || 'Skills & Technologies'}
+            Skills & Technologies
           </h2>
         </Reveal>
 

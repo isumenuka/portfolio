@@ -1,0 +1,108 @@
+/* Performance Optimizations for Low-End PCs */
+
+/* Enable GPU acceleration only for specific animation containers, NOT everything */
+.gpu-accelerated {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    perspective: 1000;
+}
+
+/* Optimize scrolling performance and Fix Double Scrollbars */
+html,
+body {
+    width: 100%;
+    /* height: 100%; Removed to allow window scroll */
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    /* overflow-y: auto; Removed - let window handle scroll */
+    /* Allow body to scroll */
+    will-change: scroll-position;
+    cursor: none !important;
+    /* Hide default cursor */
+}
+
+/* Ensure cursor stays hidden on interactive elements */
+a,
+button,
+input,
+select,
+textarea,
+[role="button"],
+.pointer-events-auto {
+    cursor: none !important;
+}
+
+/* Reduce motion for performance */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Optimize image rendering */
+img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    will-change: transform;
+}
+
+/* Contain paint for better performance */
+.section-container {
+    contain: layout style paint;
+}
+
+/* Optimize animations */
+@keyframes {
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Force GPU acceleration for transforming elements */
+[class*="transform"],
+[class*="translate"],
+[class*="scale"],
+[class*="rotate"] {
+    will-change: transform;
+}
+
+/* Optimize opacity animations */
+[class*="opacity"] {
+    will-change: opacity;
+}
+
+/* Debounce scroll events */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 255, 255, 0.5);
+}

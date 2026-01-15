@@ -3,7 +3,7 @@ import PixelTransition from '../ui/PixelTransition';
 import { Reveal } from '../ui/TextAnimations';
 import Noise from '../ui/Noise';
 import PixelCard from '../ui/PixelCard';
-import Crosshair from '../ui/Crosshair';
+
 import { FaGamepad, FaPaintBrush } from 'react-icons/fa';
 import { getCreativeUniverses } from '../../lib/sanity';
 
@@ -60,7 +60,6 @@ const CreativeUniverses: React.FC = () => {
 
     return (
         <section id="universe" ref={containerRef} className="py-20 px-4 sm:px-6 relative overflow-hidden">
-            <Crosshair containerRef={containerRef} color="#ffffff" />
             {/* Background Effects */}
             <div className="absolute top-1/4 -left-64 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[120px] -z-10 pointer-events-none" />
             <div className="absolute bottom-1/4 -right-64 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[120px] -z-10 pointer-events-none" />

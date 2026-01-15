@@ -5,11 +5,9 @@ import { education } from './education'
 import { skillCategory } from './skillCategory'
 import { creativeUniverses } from './creativeUniverses'
 import { contact } from './contact'
-import { sectionTitles } from './sectionTitles'
 
 export const schemaTypes = [
     personalInfo,
-    sectionTitles,
     project,
     experience,
     education,
