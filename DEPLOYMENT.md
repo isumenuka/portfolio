@@ -111,7 +111,19 @@ If you prefer using VS Code's GUI instead of the command line:
     -   **Root Directory (CRITICAL):** Click "Edit" and change it to `sanity`.
         -   *Note: This tells Vercel to build the content inside the "sanity" folder.*
 
-3.  **Deploy**
+3.  **Environment Variables (CRITICAL)**
+    
+    Expand **"Environment Variables"** and add the **SAME** variables as Step 2:
+    
+    | Key | Value |
+    | :--- | :--- |
+    | `NEXT_PUBLIC_SANITY_PROJECT_ID` | `zgo49znz` |
+    | `NEXT_PUBLIC_SANITY_DATASET` | `production` |
+    | `NEXT_PUBLIC_SANITY_API_VERSION` | `2024-01-01` |
+    
+    > **Why?** The Studio needs these to know which Sanity project backend to connect to for editing!
+
+4.  **Deploy**
     -   Click **"Deploy"**.
     -   Wait for build. You get a NEW URL (e.g., `my-portfolio-studio.vercel.app`).
     -   **Success!** You now have your own hosted editor.

@@ -5,7 +5,7 @@ export const client = createClient({
     projectId: 'zgo49znz', // Get from sanity.io dashboard
     dataset: 'production',
     apiVersion: '2024-01-01',
-    useCdn: true, // Set to false if you need fresh data
+    useCdn: false, // Using fresh data to avoid CDN issues
 })
 
 // Helper function to generate image URLs
@@ -17,7 +17,18 @@ export function urlFor(source: any) {
 
 // Fetch functions for each content type
 export async function getPersonalInfo() {
-    return await client.fetch('*[_type == "personalInfo"][0]{..., "cv": cv.asset->url}')
+    return await client.fetch(`
+        *[_type == "personalInfo"][0]{
+            ...,
+            "cv": cv.asset->url,
+            "profileImage": {
+                "asset": profileImage.asset->{
+                    _id,
+                    url
+                }
+            }
+        }
+    `)
 }
 
 export async function getProjects() {
