@@ -1,0 +1,6 @@
+node_modules
+dist
+.git
+.env
+sanity/node_modules
+coverage
