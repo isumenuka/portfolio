@@ -43,3 +43,10 @@ Since this challenge is all about "New Year, New You," I'm really proud of how t
 *   **Innovation & Creativity:** I didn't want a cookie-cutter site. Using Google AI to help build custom UI components allowed me to create a visual identity that actually feels like *me*.
 *   **Technical Implementation:** Moving from simple static hosting to a real containerized deployment on **Google Cloud Run** was a big milestone for me. It proves I can handle professional-grade infrastructure.
 *   **Ready for 2026:** By backing everything with **Sanity**, I've built a platform that can grow. This isn't just a one-off project for a hackathon; it's a foundation I can keep building on throughout the year.
+
+## Source Code
+
+{% github isumenuka/portfolio %}
+
+Or check out the specific branch for this challenge:
+[https://github.com/isumenuka/portfolio/tree/New-Year%2C-New-You-Portfolio-Challenge](https://github.com/isumenuka/portfolio/tree/New-Year%2C-New-You-Portfolio-Challenge)
