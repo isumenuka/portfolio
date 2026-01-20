@@ -97,3 +97,19 @@ export interface SectionTitles {
     skillsSubtitle?: string;
 }
 
+
+export interface Achievement {
+    _id: string;
+    title: string;
+    organization: string;
+    date: string;
+    description: string;
+    image?: {
+        asset: {
+            _ref: string;
+            url?: string;
+        };
+    };
+    link?: string;
+    order?: number;
+}

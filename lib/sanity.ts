@@ -59,3 +59,7 @@ export async function getSectionTitles() {
     return await client.fetch('*[_type == "sectionTitles"][0]')
 }
 
+export async function getAchievements() {
+    return await client.fetch('*[_type == "achievement"] | order(order asc)')
+}
+

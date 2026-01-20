@@ -5,6 +5,7 @@ import { education } from './education'
 import { skillCategory } from './skillCategory'
 import { creativeUniverses } from './creativeUniverses'
 import { contact } from './contact'
+import achievement from './achievement'
 
 export const schemaTypes = [
     personalInfo,
@@ -14,4 +15,5 @@ export const schemaTypes = [
     skillCategory,
     contact,
     creativeUniverses,
+    achievement,
 ]

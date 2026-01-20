@@ -11,6 +11,7 @@ import CreativeUniverses from './components/sections/CreativeUniverses';
 import Projects from './components/sections/Projects';
 import Skills from './components/sections/Skills';
 import Experience from './components/sections/Experience';
+import Achievements from './components/sections/Achievements';
 import Contact from './components/sections/Contact';
 import TargetCursor from './components/ui/TargetCursor';
 import Preloader from './components/ui/Preloader';
@@ -68,6 +69,10 @@ const App: React.FC = () => {
 
             {/* Experience & Education Section */}
             <Experience />
+
+            {/* Achievements Section */}
+            <Achievements />
+
 
             {/* ShinyText - Transition to Projects */}
             <div className="flex justify-center items-center py-8 md:py-12 px-4">
