@@ -14,203 +14,38 @@ A modern, interactive portfolio website showcasing creative projects, technical 
 
 ---
 
-## ✨ Features
+*This is a submission for the [New Year, New You Portfolio Challenge Presented by Google AI](https://dev.to/challenges/new-year-new-you-google-ai-2025-12-31).*
 
-- 🎨 **Modern UI/UX** - Stunning dark-themed design with glassmorphism and smooth animations
-- 🎭 **Creative Universes** - Showcase multiple creative identities and projects
-- 📱 **Fully Responsive** - Optimized for all devices and screen sizes
-- 🎬 **Rich Animations** - GSAP-powered transitions and interactive effects
-- 🔧 **Sanity CMS Integration** - Easy content management through Sanity Studio
-- ⚡ **Blazing Fast** - Built with Vite for optimal performance
-- 🎯 **Type-Safe** - Full TypeScript support
-- 🎨 **React Bits Components** - Premium UI components and text animations
+## About Me
 
----
+Hi there! I'm Isum Enuka, a developer and student from Sri Lanka. I'm really passionate about that sweet spot where AI, Machine Learning, and web dev collide. I love figuring out how code can solve actual problems, and I enjoy creating content to share the messy, fun process of learning with others.
 
-## 🛠️ Tech Stack
+For 2026, my goal is pretty simple: build polished, user-focused apps that combine my tech skills with my personal brand. I really believe a portfolio shouldn't just be a list of repo links-it should be a "digital handshake" that gives people a real sense of who you are.
 
-### Frontend
-- **Framework:** React 18 with TypeScript
-- **Build Tool:** Vite
-- **Styling:** Tailwind CSS + Custom CSS
-- **Animations:** GSAP, Framer Motion
-- **UI Components:** React Bits, Custom Components
+## How I Built It
 
-### Backend & CMS
-- **Headless CMS:** Sanity.io
-- **Content Delivery:** Sanity Client
+I wanted a stack that felt modern and fast, but also fun to build with.
+
+### The Tech Stack
+*   **Frontend:** React (Vite) + TypeScript. (Gotta love that type safety!)
+*   **Styling:** Tailwind CSS for layout, plus `framer-motion` and `gsap` for the animations.
+*   **UI Magic:** I leaned heavily on **React Bits** for the visual effects, especially the `GlobalSpotlight` and `ParticleCard` components. They give the site that premium, polished feel.
+*   **CMS:** **Sanity**. I set up a custom schema for my "Achievements" so I can easily update my wins without having to re-deploy the whole site every time.
+
+### Pairing with Google AI (Gemini & Antigravity)
+This project honestly felt like a collaboration. I used **Gemini** (via **Google AI Studio** and **Antigravity**) not just to generate code, but to actually solve design problems with me.
+
+*   **Custom UI:** I wanted unique, interactive elements for my achievement cards but didn't want to get bogged down in the math. I described the vibe I wanted to Gemini-"fast-moving, energetic, glowing"-and it generated the complex HTML Canvas logic using Perlin noise. We tweaked the parameters together until it felt right.
+*   **Sanity + TypeScript:** Connecting a flexible CMS to a strict frontend can be a headache. Gemini looked at my GROQ queries and wrote the TypeScript interfaces for me, which saved me from so many runtime errors.
+*   **Cloud Run:** I'd never deployed a Vite app to Cloud Run before. Gemini basically acted as my DevOps engineer, writing the `Dockerfile` and `nginx.conf` to make sure the site was production-ready.
 
 ### Deployment
-- **Frontend Hosting:** Vercel
-- **Studio Hosting:** Vercel (Self-hosted)
+For deployment, I packaged everything into a Docker container and shipped it to **Google Cloud Run**. The process was super smooth: I just pushed my code to GitHub, connected it to Cloud Run, and Google handled the rest. It's running on serverless infrastructure now, so it scales to zero when nobody's looking (saving money!) but wakes up instantly when someone visits.
 
----
+## What I’m Most Proud Of
 
-## 🚀 Getting Started
+Since this challenge is all about "New Year, New You," I'm really proud of how this portfolio matches where I'm heading in 2026.
 
-### Prerequisites
-- **Node.js** (v18 or higher)
-- **npm** or **yarn**
-- **Sanity Account** (Free tier works)
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/my-portfolio.git
-   cd my-portfolio
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Set up environment variables**
-   
-   Create a `.env.local` file in the root directory:
-   ```env
-   NEXT_PUBLIC_SANITY_PROJECT_ID=zgo49znz
-   NEXT_PUBLIC_SANITY_DATASET=production
-   NEXT_PUBLIC_SANITY_API_VERSION=2024-01-01
-   ```
-
-4. **Run the development server**
-   ```bash
-   npm run dev
-   ```
-
-5. **Open your browser**
-   
-   Navigate to [http://localhost:3000](http://localhost:3000)
-
----
-
-## 📁 Project Structure
-
-```
-ezsumm-portfolio/
-├── components/          # React components
-│   ├── ui/             # Reusable UI components
-│   ├── sections/       # Page sections
-│   └── animations/     # Animation components
-├── lib/                # Utilities and helpers
-│   ├── sanity.ts       # Sanity client configuration
-│   └── utils.ts        # Helper functions
-├── sanity/             # Sanity Studio configuration
-│   ├── schemaTypes/    # Sanity schemas
-│   └── sanity.config.ts
-├── public/             # Static assets
-├── src/                # Source files
-│   ├── App.tsx         # Main app component
-│   └── main.tsx        # Entry point
-└── DEPLOYMENT.md       # Deployment guide
-```
-
----
-
-## 🎨 Customization
-
-### Updating Content via Sanity Studio
-
-1. **Run Sanity Studio locally:**
-   ```bash
-   cd sanity
-   npm run dev
-   ```
-
-2. **Access the Studio:**
-   
-   Open [http://localhost:3333](http://localhost:3333)
-
-3. **Edit Content:**
-   - Update About section
-   - Add/Edit Projects
-   - Manage Skills
-   - Update Creative Universes
-
----
-
-## 🌐 Deployment
-
-For detailed deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md)
-
-### Quick Deploy to Vercel
-
-1. Push your code to GitHub
-2. Import project in Vercel
-3. Add environment variables
-4. Deploy!
-
----
-
-## 📝 Available Scripts
-
-| Script | Description |
-|--------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production |
-| `npm run preview` | Preview production build |
-| `npm run lint` | Run ESLint |
-
----
-
-## 🎯 Key Features Breakdown
-
-### Creative Universes
-Dynamic showcase of different creative identities with smooth transitions and animations.
-
-### Interactive Projects
-Project cards with hover effects, detailed descriptions, and technology tags.
-
-### Skills Section
-Visual representation of technical skills with animated progress indicators.
-
-### Responsive Design
-Mobile-first approach ensuring perfect display on all devices.
-
----
-
-## 🤝 Contributing
-
-This is a personal portfolio project, but suggestions and feedback are welcome!
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
----
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
----
-
-## 👤 Author
-
-**Isum Enuka**
-
-- Portfolio: [Your Live Portfolio URL]
-- GitHub: [@your-github-username](https://github.com/your-github-username)
-
----
-
-## 🙏 Acknowledgments
-
-- [React Bits](https://reactbits.dev) - Premium UI components
-- [GSAP](https://greensock.com/gsap/) - Animation library
-- [Sanity.io](https://www.sanity.io/) - Headless CMS
-- [Vercel](https://vercel.com/) - Deployment platform
-
----
-
-<div align="center">
-
-Made with ❤️ by Isum Enuka
-
-⭐ Star this repo if you like it!
-
-</div>
+*   **Innovation & Creativity:** I didn't want a cookie-cutter site. Using Google AI to help build custom UI components allowed me to create a visual identity that actually feels like *me*.
+*   **Technical Implementation:** Moving from simple static hosting to a real containerized deployment on **Google Cloud Run** was a big milestone for me. It proves I can handle professional-grade infrastructure.
+*   **Ready for 2026:** By backing everything with **Sanity**, I've built a platform that can grow. This isn't just a one-off project for a hackathon; it's a foundation I can keep building on throughout the year.
