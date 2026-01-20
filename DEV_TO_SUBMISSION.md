@@ -1,10 +1,10 @@
 *This is a submission for the [New Year, New You Portfolio Challenge Presented by Google AI](https://dev.to/challenges/new-year-new-you-google-ai-2025-12-31).*
 
+Website: https://portfolio-565952799678.asia-southeast1.run.app/
+
 ## About Me
 
 Hi there! I'm Isum Enuka, a developer and student from Sri Lanka. I'm really passionate about that sweet spot where AI, Machine Learning, and web dev collide. I love figuring out how code can solve actual problems, and I enjoy creating content to share the messy, fun process of learning with others.
-
-When I'm not coding, I'm usually making YouTube videos breaking down tech concepts or diving into hackathons. I thrive in those competitive environments-they push me to learn way faster than I would on my own.
 
 For 2026, my goal is pretty simple: build polished, user-focused apps that combine my tech skills with my personal brand. I really believe a portfolio shouldn't just be a list of repo links-it should be a "digital handshake" that gives people a real sense of who you are.
 
